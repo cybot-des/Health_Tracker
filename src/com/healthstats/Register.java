@@ -12,7 +12,7 @@ public class Register extends JFrame implements ActionListener
     JLabel nameTxt, emailidTxt ,usernameTxt, passwordTxt, cnf_pwdTxt, successTxt;
     JTextField name, emailid,username;
     JPasswordField password, cnf_pwd;
-    JButton b;
+    JButton submit,back_to_login;
 
     Register()
     {
@@ -69,18 +69,26 @@ public class Register extends JFrame implements ActionListener
         add(cnf_pwd);
 
         // submit
-        b = new JButton("Submit");
-        b.setFont(new Font("Arial", Font.BOLD,15));
-        b.setBounds(530,465,100,30);
-        b.setBackground(Color.decode("#228B22"));
-        b.addActionListener(this);
-        add(b);
+        submit = new JButton("Submit");
+        submit.setFont(new Font("Arial", Font.BOLD,15));
+        submit.setBounds(530,465,100,30);
+        submit.setBackground(Color.decode("#228B22"));
+        submit.addActionListener(this);
+        add(submit);
 
         // success
         successTxt = new JLabel("");
         successTxt.setBounds(505,510,200,30);
         successTxt.setBackground(new Color(154, 225, 39));
         add(successTxt);
+
+        //Back to Login
+        back_to_login = new JButton("Back to Login");
+        back_to_login.setFont(new Font("Arial", Font.BOLD,15));
+        back_to_login.setBounds(530,520,100,30);
+        back_to_login.setBackground(Color.decode("#228B22"));
+        back_to_login.addActionListener(this);
+        add(back_to_login);
 
         // frame
         setSize(800,800);
@@ -92,7 +100,7 @@ public class Register extends JFrame implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource()==b)
+        if(ae.getSource()==submit)
         {
             try
             {
@@ -102,25 +110,32 @@ public class Register extends JFrame implements ActionListener
                 String cnf_passwd = cnf_pwd.getText();
                 String email = emailid.getText();
 
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/healthtracker\",\"root\",\"root");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/healthtracker","root","root");
                 if(passwd.equals(cnf_passwd))
                 {
                     PreparedStatement pst = conn.prepareStatement("insert into login values(?,?,?,?)");
-                    pst.setString(0,uname);
-                    pst.setString(1,passwd);
-                    pst.setString(2,name1);
-                    pst.setString(3,email);
+                    ResultSet rs;
+                    pst.setString(1,uname);
+                    pst.setString(2,passwd);
+                    pst.setString(3,name1);
+                    pst.setString(4,email);
+                    pst.executeUpdate();
+
+                    JOptionPane.showMessageDialog(null,name1+" your details submitted !");
                 }
                 else{
                     JOptionPane.showMessageDialog(null,"Password and confirm password dont match!!");
                 }
-
-
             }
             catch(Exception e)
             {
                 e.printStackTrace();
             }
+        }
+        else if(ae.getSource()==back_to_login)
+        {
+            new Login();
+            setVisible(false);
         }
 
     }
