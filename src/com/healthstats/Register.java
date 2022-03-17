@@ -31,7 +31,6 @@ public class Register extends JFrame implements ActionListener
         name.setBounds(430,115,300,30);
         add(name);
 
-
         // username
         usernameTxt = new JLabel("Username");
         usernameTxt.setBounds(430,160,300,30);

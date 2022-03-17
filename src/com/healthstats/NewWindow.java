@@ -4,23 +4,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 //import java.sql.Connection;
 //import java.sql.DriverManager;
 //import java.sql.ResultSet;
 //import java.sql.Statement;
 
 
-public class BmiCalculator extends JFrame implements ActionListener {
+public class NewWindow extends JFrame implements ActionListener {
     JPanel panel1;
     JLabel height,weight,bmi;
     JTextField height1, weight1;
-    JButton calculateBmi, back, clr;
+    JButton calculateBmi;
     JTextArea bmi1;
     double ht=0,wt=0,res=0;
 
-    BmiCalculator(){
+    NewWindow(){
         panel1 = new JPanel(new FlowLayout());
         panel1.setBounds(0,0,350,800);
         panel1.setBackground(Color.decode("#0f0080"));
@@ -48,34 +46,26 @@ public class BmiCalculator extends JFrame implements ActionListener {
         weight1.setBounds(550,250,200,30);
         add(weight1);
 
-        // creating a label for bmi
-        bmi = new JLabel("Your BMI:");
-        bmi.setFont(new Font("Times New Roman", Font.BOLD,14));
-        bmi.setBounds(380,350,200,30);
-        add(bmi);
-
-        bmi1 = new JTextArea();
-        bmi1.setBackground(Color.decode("#E6EE9C"));
-        bmi1.setFont(new Font("Times New Roman", Font.BOLD,14));
-        bmi1.setBorder(BorderFactory.createLineBorder(Color.black,1));
-        bmi1.setEditable(false);
-        bmi1.setBounds(550,350,200,30);
-        add(bmi1);
-
         // button for calculating bmi
         calculateBmi = new JButton("Compute BMI");
         calculateBmi.setFont(new Font("Arial", Font.BOLD,15));
-        calculateBmi.setBounds(350,450,150,30);
+        calculateBmi.setBounds(470,350,200,30);
         calculateBmi.setBackground(Color.decode("#228B22"));
         calculateBmi.addActionListener(this);
         add(calculateBmi);
 
-        clr = new JButton("Clear");
-        clr.setFont(new Font("Arial", Font.BOLD,15));
-        clr.setBounds(500,450,150,30);
-        clr.setBackground(Color.decode("#228B22"));
-        clr.addActionListener(this);
-        add(clr);
+        // creating a label for bmi
+        bmi = new JLabel("Your BMI:");
+        bmi.setFont(new Font("Times New Roman", Font.BOLD,14));
+        bmi.setBounds(380,450,200,30);
+        add(bmi);
+
+        bmi1 = new JTextArea();
+        bmi1.setFont(new Font("Times New Roman", Font.BOLD,14));
+        bmi1.setBorder(BorderFactory.createLineBorder(Color.black,1));
+        bmi1.setBounds(550,450,200,30);
+        add(bmi1);
+
 
         setIconImage(new ImageIcon("bmi.png").getImage());
         setSize(800,800);
@@ -92,12 +82,8 @@ public class BmiCalculator extends JFrame implements ActionListener {
             if(e.getSource()==calculateBmi){
                 ht = Double.parseDouble(height1.getText());
                 wt = Double.parseDouble(weight1.getText());
-                res = wt/(ht*ht);
-                DecimalFormat df = new DecimalFormat("#.##");
-                df.setRoundingMode(RoundingMode.CEILING);
-                bmi1.setEditable(true);
-                bmi1.setText(String.valueOf(df.format(res)));
-                bmi1.setEditable(false);
+                res = ht/(wt*wt);
+                bmi1.setText(String.valueOf(res));
 //                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/healthtracker","root","root");
 //                Statement st = con.createStatement();
 //                ResultSet rs = st.executeQuery("insert into BMI where values(?,?,?)",(ht,wt,res));
@@ -109,9 +95,5 @@ public class BmiCalculator extends JFrame implements ActionListener {
         }catch(Exception e1){
             e1.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new BmiCalculator();
     }
 }

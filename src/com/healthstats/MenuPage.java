@@ -17,6 +17,7 @@ public class MenuPage extends JFrame implements ActionListener
         panel.setBackground(Color.decode("#0f0080"));
         add(panel);
 
+        // created a button to calculate bmi
         bmi = new JButton("Calculate BMI");
         bmi.setFont(new Font("Arial", Font.BOLD,15));
         bmi.setBounds(70,225,210,30);
@@ -25,6 +26,7 @@ public class MenuPage extends JFrame implements ActionListener
         bmi.addActionListener(this);
         add(bmi);
 
+        // created a button to calculate w-to-h ratio
         whr = new JButton("Calculate W-to-H Ratio");
         whr.setFont(new Font("Arial", Font.BOLD,15));
         whr.setBounds(70,325,210,30);
@@ -33,7 +35,7 @@ public class MenuPage extends JFrame implements ActionListener
         whr.addActionListener(this);
         add(whr);
 
-        // calorie
+        // created a button to calculate calories
         calorie = new JButton("Calculate Calories");
         calorie.setFont(new Font("Arial", Font.BOLD,15));
         calorie.setBounds(70,425,210,30);
@@ -42,7 +44,7 @@ public class MenuPage extends JFrame implements ActionListener
         calorie.addActionListener(this);
         add(calorie);
 
-        // track button
+        // created a button to track bmi
         track = new JButton("Track BMI");
         track.setFont(new Font("Arial", Font.BOLD,15));
         track.setBounds(475,321,210,30);
@@ -62,7 +64,14 @@ public class MenuPage extends JFrame implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-
+        try{
+            if(ae.getSource()==bmi){
+                BmiCalculator bmical = new BmiCalculator();
+                bmical.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
