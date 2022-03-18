@@ -74,6 +74,7 @@ public class Login extends JFrame implements ActionListener
         setVisible(true);
         setBackground(Color.DARK_GRAY);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
 
@@ -94,7 +95,7 @@ public class Login extends JFrame implements ActionListener
                 if(rs.next())
                 {
                     System.out.println("User Logged in!");
-                    MenuPage menupage = new MenuPage();
+                    new MenuPage(username.getText());
                     setVisible(false);
                 }
                 else

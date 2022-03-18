@@ -13,6 +13,7 @@ public class Register extends JFrame implements ActionListener
     JTextField name, emailid,username;
     JPasswordField password, cnf_pwd;
     JButton submit,back_to_login;
+    Font font;
 
     Register()
     {
@@ -109,6 +110,7 @@ public class Register extends JFrame implements ActionListener
                 String name1 = name.getText();
                 String cnf_passwd = cnf_pwd.getText();
                 String email = emailid.getText();
+
 
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/healthtracker","root","root");
                 if(passwd.equals(cnf_passwd))
