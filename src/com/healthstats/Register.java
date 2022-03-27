@@ -1,5 +1,4 @@
 package com.healthstats;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -95,6 +94,7 @@ public class Register extends JFrame implements ActionListener
         setSize(800,800);
         setLayout(null);
         setBackground(Color.DARK_GRAY);
+        setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -115,7 +115,7 @@ public class Register extends JFrame implements ActionListener
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/healthtracker","root","root");
                 if(passwd.equals(cnf_passwd))
                 {
-                    PreparedStatement pst = conn.prepareStatement("insert into login values(?,?,?,?)");
+                    PreparedStatement pst = conn.prepareStatement("insert into login(username,password,name,email) values(?,?,?,?)");
                     ResultSet rs;
                     pst.setString(1,uname);
                     pst.setString(2,passwd);
@@ -142,8 +142,8 @@ public class Register extends JFrame implements ActionListener
 
     }
 
-    public static void main(String args[])
-    {
-        new Register();
-    }
+//    public static void main(String args[])
+//    {
+//        new Register();
+//    }
 }

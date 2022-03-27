@@ -121,8 +121,8 @@ public class WaistToHipRatio extends JFrame implements ActionListener, FocusList
         }
         else if(ae.getSource()==back)
         {
-            String username="Pooja";
-            new MenuPage(username);
+            int id=0;
+            new MenuPage(id);
             dispose();
         }
     }
@@ -145,8 +145,8 @@ public class WaistToHipRatio extends JFrame implements ActionListener, FocusList
 
     }
 
-    public static void main(String[] args) {
-        new WaistToHipRatio();
-    }
+//    public static void main(String[] args) {
+//        new WaistToHipRatio();
+//    }
 
 }

@@ -143,8 +143,8 @@ public class IdealWeightCalculator extends JFrame implements ActionListener, Foc
 
         else if(ae.getSource()==back)
         {
-            String username="Pooja";
-            new MenuPage(username);
+            int id=0;
+            new MenuPage(id);
             dispose();
         }
 
@@ -172,7 +172,7 @@ public class IdealWeightCalculator extends JFrame implements ActionListener, Foc
 
     }
 
-    public static void main(String[] args) {
-        new IdealWeightCalculator();
-    }
+//    public static void main(String[] args) {
+//        new IdealWeightCalculator();
+//    }
 }

@@ -167,8 +167,8 @@ public class BodyFatCalculator extends JFrame implements ActionListener, FocusLi
         }
         else if(ae.getSource()==back)
         {
-            String username="Pooja";
-            new MenuPage(username);
+            int id=0;
+            new MenuPage(id);
             dispose();
         }
 
@@ -192,9 +192,9 @@ public class BodyFatCalculator extends JFrame implements ActionListener, FocusLi
 
     }
 
-    public static void main(String[] args) {
-        new BodyFatCalculator();
-    }
+//    public static void main(String[] args) {
+//        new BodyFatCalculator();
+//    }
 
 
 }

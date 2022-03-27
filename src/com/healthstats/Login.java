@@ -95,7 +95,7 @@ public class Login extends JFrame implements ActionListener
                 if(rs.next())
                 {
                     System.out.println("User Logged in!");
-                    new MenuPage(username.getText());
+                    new MenuPage(rs.getInt("id"));
                     setVisible(false);
                 }
                 else

@@ -6,10 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.ResultSet;
-//import java.sql.Statement;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class BmiCalculator extends JFrame implements ActionListener {
@@ -19,8 +18,10 @@ public class BmiCalculator extends JFrame implements ActionListener {
     JButton calculateBmi, back, clr;
     JTextArea bmi1;
     double ht=0,wt=0,res=0;
+    int id;
 
-    BmiCalculator(){
+    BmiCalculator(int id){
+        this.id = id;
         panel1 = new JPanel(new FlowLayout());
         panel1.setBounds(0,0,350,800);
         panel1.setBackground(Color.decode("#0f0080"));
@@ -93,9 +94,9 @@ public class BmiCalculator extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent ae) {
         try{
-            if(e.getSource()==calculateBmi){
+            if(ae.getSource()==calculateBmi){
                 ht = Double.parseDouble(height1.getText());
                 wt = Double.parseDouble(weight1.getText());
                 res = wt/(ht*ht);
@@ -104,20 +105,41 @@ public class BmiCalculator extends JFrame implements ActionListener {
                 bmi1.setEditable(true);
                 bmi1.setText(String.valueOf(df.format(res)));
                 bmi1.setEditable(false);
-//                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/healthtracker","root","root");
-//                Statement st = con.createStatement();
-//                ResultSet rs = st.executeQuery("insert into BMI where values(?,?,?)",(ht,wt,res));
-//
-//                if(rs.next()) {
-//                    System.out.println("Data inserted!");
-//                }
+
+                Date date = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                String date1 = formatter.format(date);
+
+
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/healthtracker","root","root");
+                PreparedStatement pst = con.prepareStatement("insert into trackedbmi values(?,?,?)");
+                pst.setInt(1,id);
+                pst.setDouble(2,Double.parseDouble(bmi1.getText()));
+                pst.setString(3,date1);
+                pst.executeUpdate();
+
+
             }
+            else if(ae.getSource()==clr)
+            {
+                height1.setText("");
+                weight1.setText("");
+                bmi1.setText("");
+            }
+            else if(ae.getSource()==back)
+            {
+                int id=0;
+                new MenuPage(id);
+                dispose();
+            }
+
         }catch(Exception e1){
             e1.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
-        new BmiCalculator();
-    }
+//    public static void main(String[] args) {
+//        int id=1;
+//        new BmiCalculator(id);
+//    }
 }

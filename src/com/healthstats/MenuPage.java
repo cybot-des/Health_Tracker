@@ -8,11 +8,13 @@ import java.awt.event.*;
 public class MenuPage extends JFrame implements ActionListener
 {
     JPanel panel;
-    JButton bmi,whr,calorie,track;
+    JButton bmi,whr,bfc,track,idwc;
+    int id;
 
-    MenuPage(String username)
+    MenuPage(int id)
     {
-        System.out.println(username);
+        this.id = id;
+        System.out.println(id);
         panel = new JPanel();
         BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
         panel.setLayout(boxlayout);
@@ -42,15 +44,25 @@ public class MenuPage extends JFrame implements ActionListener
         panel.add(whr);
 
         // calorie
-        calorie = new JButton("Calculate Calories");
-        calorie.setFont(new Font("Arial", Font.BOLD,15));
+        bfc = new JButton("Calculate Body Fat Percentage");
+        bfc.setFont(new Font("Arial", Font.BOLD,15));
         //calorie.setBounds(70,425,210,30);
-        calorie.setBackground(Color.decode("#228B22"));
-        calorie.setAlignmentX(Component.CENTER_ALIGNMENT);
-        calorie.setAlignmentY(Component.CENTER_ALIGNMENT);
+        bfc.setBackground(Color.decode("#228B22"));
+        bfc.setAlignmentX(Component.CENTER_ALIGNMENT);
+        bfc.setAlignmentY(Component.CENTER_ALIGNMENT);
         //calorie.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        calorie.addActionListener(this);
-        panel.add(calorie);
+        bfc.addActionListener(this);
+        panel.add(bfc);
+
+        idwc = new JButton("Calculate Ideal Weight");
+        idwc.setFont(new Font("Arial", Font.BOLD,15));
+        //calorie.setBounds(70,425,210,30);
+        idwc.setBackground(Color.decode("#228B22"));
+        idwc.setAlignmentX(Component.CENTER_ALIGNMENT);
+        idwc.setAlignmentY(Component.CENTER_ALIGNMENT);
+        //calorie.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        idwc.addActionListener(this);
+        panel.add(idwc);
 
         // track button
         track = new JButton("Track BMI");
@@ -72,11 +84,31 @@ public class MenuPage extends JFrame implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        if(ae.getSource()==bmi)
+        {
+            new BmiCalculator(id);
+        }
+
+        else if(ae.getSource()==whr)
+        {
+            new WaistToHipRatio();
+        }
+        else if(ae.getSource()==bfc)
+        {
+            new BodyFatCalculator();
+        }
+        else if(ae.getSource()==idwc)
+        {
+            new IdealWeightCalculator();
+        }
+        else if(ae.getSource()==track)
+        {
+            new BmiChart("BMI Count History",id);
+        }
 
     }
 
     public static void main(String[] args) {
-        String username="pooja";
-        new MenuPage(username);
+        new MenuPage(0);
     }
 }
