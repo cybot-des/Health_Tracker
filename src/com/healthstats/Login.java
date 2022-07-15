@@ -24,16 +24,28 @@ public class Login extends JFrame implements ActionListener
         add(panel);
 
         // ADDING IMAGE & PROJECT TITLE TO PANEL
-        ImageIcon i1 = new ImageIcon("./images/healthcare(1).png");
-        Image i2 = i1.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel l11 = new JLabel(i3);
-        l11.setBounds(70, 70, 100, 100);
-        panel.add(l11);
+//        ImageIcon i1 = new ImageIcon("./images/healthcare(1).png");
+//        Image i2 = i1.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT);
+//        ImageIcon i3 = new ImageIcon(i2);
+//        JLabel l11 = new JLabel(i3);
+//        l11.setBounds(70, 70, 100, 100);
+//        panel.add(l11);
+
+        Icon imgIcon = new ImageIcon(new ImageIcon("./images/healthcare(1).png").getImage().getScaledInstance(200,200,Image.SCALE_SMOOTH));
+        JLabel label = new JLabel();
+        //label.setBounds(10, 43, 100, 100); // You can use your own values
+        label.setIcon(imgIcon);
+        label.setFont(new Font("Verdana",Font.BOLD,100));
+        panel.add(label);
+
+        JLabel blank = new JLabel("\n\n\n\n");
+        //blank.setBounds();
+        panel.add(blank);
 
         title  = new JLabel("HealthiFy");
         title.setForeground(Color.WHITE);
-        title.setBounds(70,200,150,150);
+        title.setFont(new Font("Verdana", Font.BOLD,40));
+        title.setBounds(70,500,300,300);
         panel.add(title);
 
         // ADDING LABEL & TEXT FIELD COMPONENTS

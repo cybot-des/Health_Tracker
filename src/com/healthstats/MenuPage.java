@@ -8,7 +8,8 @@ import java.awt.event.*;
 public class MenuPage extends JFrame implements ActionListener
 {
     JPanel panel;
-    JButton bmi,whr,bfc,track,idwc;
+    JButton bmi,whr,bfc,track,idwc, logout;
+    JLabel title;
     int id;
 
     MenuPage(int id)
@@ -16,62 +17,59 @@ public class MenuPage extends JFrame implements ActionListener
         this.id = id;
         System.out.println(id);
         panel = new JPanel();
-        BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
-        panel.setLayout(boxlayout);
-        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.setBounds(0,0,350,800);
         panel.setBackground(Color.decode("#0f0080"));
         add(panel);
 
+        Icon imgIcon = new ImageIcon(new ImageIcon("./images/healthcare(1).png").getImage().getScaledInstance(200,200,Image.SCALE_SMOOTH));
+        JLabel label = new JLabel();
+        //label.setBounds(10, 43, 100, 100); // You can use your own values
+        label.setIcon(imgIcon);
+        label.setFont(new Font("Verdana",Font.BOLD,100));
+        panel.add(label);
+
+        title  = new JLabel("HealthiFy");
+        title.setForeground(Color.WHITE);
+        title.setFont(new Font("Verdana", Font.BOLD,40));
+        title.setBounds(70,500,300,300);
+        panel.add(title);
+
         bmi = new JButton("Calculate BMI");
         bmi.setFont(new Font("Arial", Font.BOLD,15));
-        //bmi.setBounds(70,225,210,30);
-        bmi.setBackground(Color.decode("#228B22"));
-        //bmi.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        bmi.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bmi.setAlignmentY(Component.CENTER_ALIGNMENT);
+        bmi.setBounds(440,200,252,30);
+        bmi.setBackground(new Color(154, 225, 39));
         bmi.addActionListener(this);
-        panel.add(bmi);
+        add(bmi);
 
         whr = new JButton("Calculate W-to-H Ratio");
         whr.setFont(new Font("Arial", Font.BOLD,15));
-        //whr.setBounds(70,325,210,30);
-        whr.setBackground(Color.decode("#228B22"));
-        whr.setAlignmentX(Component.CENTER_ALIGNMENT);
-        whr.setAlignmentY(Component.CENTER_ALIGNMENT);
-        //whr.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        whr.setBounds(440,300,252,30);
+        whr.setBackground(new Color(154, 225, 39));
         whr.addActionListener(this);
-        panel.add(whr);
+        add(whr);
 
         // calorie
-        bfc = new JButton("Calculate Body Fat Percentage");
+        bfc = new JButton("Calculate Body Fat %");
         bfc.setFont(new Font("Arial", Font.BOLD,15));
-        //calorie.setBounds(70,425,210,30);
-        bfc.setBackground(Color.decode("#228B22"));
-        bfc.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bfc.setAlignmentY(Component.CENTER_ALIGNMENT);
-        //calorie.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        bfc.setBounds(440,400,252,30);
+        bfc.setBackground(new Color(154, 225, 39));
         bfc.addActionListener(this);
-        panel.add(bfc);
+        add(bfc);
 
         idwc = new JButton("Calculate Ideal Weight");
         idwc.setFont(new Font("Arial", Font.BOLD,15));
-        //calorie.setBounds(70,425,210,30);
-        idwc.setBackground(Color.decode("#228B22"));
-        idwc.setAlignmentX(Component.CENTER_ALIGNMENT);
-        idwc.setAlignmentY(Component.CENTER_ALIGNMENT);
-        //calorie.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        idwc.setBounds(440,500,252,30);
+        idwc.setBackground(new Color(154, 225, 39));
         idwc.addActionListener(this);
-        panel.add(idwc);
+        add(idwc);
 
-        // track button
-        track = new JButton("Track BMI");
-        track.setFont(new Font("Arial", Font.BOLD,15));
-        track.setBounds(475,321,210,30);
-        track.setBackground(Color.decode("#4169E1"));
-        //track.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        track.addActionListener(this);
-        add(track);
+        logout = new JButton("Logout");
+        logout.setFont(new Font("Arial", Font.BOLD,15));
+        logout.setBounds(500,600,120,30);
+        logout.setBackground(Color.RED);
+        logout.addActionListener(this);
+        add(logout);
+
 
         setIconImage(new ImageIcon("scales.png").getImage());
         setSize(800,800);
@@ -87,28 +85,41 @@ public class MenuPage extends JFrame implements ActionListener
         if(ae.getSource()==bmi)
         {
             new BmiCalculator(id);
+            dispose();
         }
-
         else if(ae.getSource()==whr)
         {
-            new WaistToHipRatio();
+            new WaistToHipRatio(id);
+            dispose();
         }
         else if(ae.getSource()==bfc)
         {
-            new BodyFatCalculator();
+            new BodyFatCalculator(id);
+            dispose();
         }
         else if(ae.getSource()==idwc)
         {
-            new IdealWeightCalculator();
+            new IdealWeightCalculator(id);
+            dispose();
         }
-        else if(ae.getSource()==track)
+        else if(ae.getSource()==logout)
         {
-            new BmiChart("BMI Count History",id);
+            int result = JOptionPane.showConfirmDialog(null,"Are you sure?","logout confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if(result == JOptionPane.YES_OPTION)
+            {
+                new Login();
+                dispose();
+            }
+            else if (result == JOptionPane.NO_OPTION){
+
+            }
+
         }
 
+
     }
 
-    public static void main(String[] args) {
-        new MenuPage(0);
-    }
+//    public static void main(String[] args) {
+//        new MenuPage(0);
+//    }
 }

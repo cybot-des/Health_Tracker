@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.sql.*;
@@ -11,21 +13,32 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class BmiCalculator extends JFrame implements ActionListener {
+public class BmiCalculator extends JFrame implements ActionListener, FocusListener {
     JPanel panel1;
-    JLabel height,weight,bmi;
+    JLabel height,weight,bmi, bmi_title;
     JTextField height1, weight1;
-    JButton calculateBmi, back, clr;
+    JButton calculateBmi, back, clr, track;
     JTextArea bmi1;
     double ht=0,wt=0,res=0;
     int id;
 
     BmiCalculator(int id){
         this.id = id;
-        panel1 = new JPanel(new FlowLayout());
+        panel1 = new JPanel();
         panel1.setBounds(0,0,350,800);
         panel1.setBackground(Color.decode("#0f0080"));
         add(panel1);
+
+        ImageIcon i1 = new ImageIcon("images/meter.png");
+        Image i2 = i1.getImage().getScaledInstance(300, 200, Image.SCALE_DEFAULT);
+        ImageIcon i3 = new ImageIcon(i2);
+        JLabel l11 = new JLabel(i3);
+        panel1.add(l11);
+
+        bmi_title = new JLabel("BMI Calculator");
+        bmi_title.setFont(new Font("Times New Roman",Font.ITALIC,25));
+        bmi_title.setBounds(490,50,200,30);
+        add(bmi_title);
 
         // for entering height
         height = new JLabel("Enter your height (in m): ");
@@ -33,9 +46,13 @@ public class BmiCalculator extends JFrame implements ActionListener {
         height.setBounds(380,150,200,30);
         add(height);
 
-        height1 = new JTextField();
+        height1 = new JTextField("Height in m");
+        //height1.setText();
+        height1.setForeground(Color.GRAY);
+        height1.setToolTipText("Height in m");
         height1.setBorder(BorderFactory.createLineBorder(Color.black,1));
         height1.setBounds(550,150,200,30);
+        height1.addFocusListener(this);
         add(height1);
 
         // for entering weight
@@ -44,9 +61,13 @@ public class BmiCalculator extends JFrame implements ActionListener {
         weight.setBounds(380,250,200,30);
         add(weight);
 
-        weight1 = new JTextField();
+        weight1 = new JTextField("Weight in kg");
+        //weight1.setText();
+        weight1.setForeground(Color.GRAY);
+        weight1.setToolTipText("Weight in kg");
         weight1.setBorder(BorderFactory.createLineBorder(Color.black,1));
         weight1.setBounds(550,250,200,30);
+        weight1.addFocusListener(this);
         add(weight1);
 
         // creating a label for bmi
@@ -63,10 +84,22 @@ public class BmiCalculator extends JFrame implements ActionListener {
         bmi1.setBounds(550,350,200,30);
         add(bmi1);
 
+
+        // track button
+        track = new JButton("Track BMI");
+        track.setFont(new Font("Arial", Font.BOLD,18));
+        track.setLayout(new BoxLayout(track, BoxLayout.Y_AXIS));
+        track.setAlignmentX(Component.CENTER_ALIGNMENT);
+        track.setAlignmentY(Component.CENTER_ALIGNMENT);
+        panel1.add(Box.createRigidArea(new Dimension(0, 550)));
+        track.setBackground(Color.decode("#EDC988"));
+        track.addActionListener(this);
+        panel1.add(track);
+
         // button for calculating bmi
         calculateBmi = new JButton("Calculate");
         calculateBmi.setFont(new Font("Arial", Font.BOLD,15));
-        calculateBmi.setBounds(430,500,120,30);
+        calculateBmi.setBounds(410,500,120,30);
         calculateBmi.setBackground(new Color(154, 225, 39));
         calculateBmi.addActionListener(this);
         add(calculateBmi);
@@ -79,7 +112,7 @@ public class BmiCalculator extends JFrame implements ActionListener {
         add(clr);
 
         back = new JButton("Back");
-        back.setBounds(520,580,120,30);
+        back.setBounds(510,580,120,30);
         back.setBackground(new Color(154, 225, 39));
         back.addActionListener(this);
         add(back);
@@ -88,9 +121,19 @@ public class BmiCalculator extends JFrame implements ActionListener {
         setSize(800,800);
         setLayout(null);
         setBackground(Color.DARK_GRAY);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         setResizable(false);
+    }
+
+    void textBoxStyle()
+    {
+        height1.setText("Height in m");
+        height1.setForeground(Color.GRAY);
+        weight1.setText("Weight in Kg");
+        weight1.setForeground(Color.GRAY);
+        bmi1.setText("");
+
     }
 
     @Override
@@ -122,15 +165,16 @@ public class BmiCalculator extends JFrame implements ActionListener {
             }
             else if(ae.getSource()==clr)
             {
-                height1.setText("");
-                weight1.setText("");
-                bmi1.setText("");
+                textBoxStyle();
             }
             else if(ae.getSource()==back)
             {
-                int id=0;
                 new MenuPage(id);
                 dispose();
+            }
+            else if(ae.getSource()==track)
+            {
+                new BmiChart("BMI Count History",id);
             }
 
         }catch(Exception e1){
@@ -142,4 +186,21 @@ public class BmiCalculator extends JFrame implements ActionListener {
 //        int id=1;
 //        new BmiCalculator(id);
 //    }
+
+    @Override
+    public void focusGained(FocusEvent fe) {
+        if(fe.getSource()==height1)
+        {
+            height1.setText("");
+        }
+        else if(fe.getSource()==weight1)
+        {
+            weight1.setText("");
+        }
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+
+    }
 }

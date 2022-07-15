@@ -14,10 +14,11 @@ public class IdealWeightCalculator extends JFrame implements ActionListener, Foc
     JComboBox gender;
     JLabel genderTxt, heightTxt, cur_weightTxt, idealTxt;
     JButton calculate, clear, back;
+    int id;
 
-
-    IdealWeightCalculator()
+    IdealWeightCalculator(int id)
     {
+        this.id = id;
         // ADDING LEFT PANEL
         panel = new JPanel(new FlowLayout());
         panel.setBounds(0,0,350,800);
@@ -143,7 +144,6 @@ public class IdealWeightCalculator extends JFrame implements ActionListener, Foc
 
         else if(ae.getSource()==back)
         {
-            int id=0;
             new MenuPage(id);
             dispose();
         }
@@ -173,6 +173,6 @@ public class IdealWeightCalculator extends JFrame implements ActionListener, Foc
     }
 
 //    public static void main(String[] args) {
-//        new IdealWeightCalculator();
+//        new IdealWeightCalculator(0);
 //    }
 }
